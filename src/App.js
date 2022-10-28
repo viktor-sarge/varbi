@@ -44,7 +44,7 @@ function App() {
   return (
     <div className="App">
 
-      <div className='container mx-auto'>
+      <div className='container px-4 mx-auto'>
         <div className='text-center'>
           <h1 className='text-3xl font-bold py-12'>Lediga jobb</h1>
         </div>
@@ -58,8 +58,8 @@ function App() {
         </div>
       </div>
 
-      <div className='bg-sky-900'>
-        <div className='container mx-auto pt-16'>
+      <div className='bg-sky-900 px-4'>
+        <div className='container mx-auto py-16'>
           <Grid data={filteredJobs} />
         </div>
       </div>
