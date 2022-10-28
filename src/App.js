@@ -42,21 +42,27 @@ function App() {
   };
 
   return (
-    <div className="App container mx-auto">
-      <div className='text-center'>
-        <h1 className='text-3xl font-bold py-12'>Lediga jobb</h1>
-      </div>
-      <div className='flex justify-center'>
-        <SearchBox onChangeHandler={onSearchChange} placeholder='Sök på jobbtitlar här' className='search-box' />
+    <div className="App">
+
+      <div className='container mx-auto'>
+        <div className='text-center'>
+          <h1 className='text-3xl font-bold py-12'>Lediga jobb</h1>
+        </div>
+        <div className='flex justify-center'>
+          <SearchBox onChangeHandler={onSearchChange} placeholder='Sök på jobbtitlar här' className='search-box' />
+        </div>
+        <div className='flex pt-8 pb-12 justify-center'>
+          <Dropdown values={towns} name="towns" id="towns-select" />
+          <Dropdown values={types} name="types" id="types-select" />
+          <Dropdown values={hours} name="hours" id="hours-select" />
+        </div>
       </div>
 
-      <div className='flex py-4 justify-center'>
-        <Dropdown values={towns} name="towns" id="towns-select" />
-        <Dropdown values={types} name="types" id="types-select" />
-        <Dropdown values={hours} name="hours" id="hours-select" />
+      <div className='bg-sky-900'>
+        <div className='container mx-auto pt-16'>
+          <Grid data={filteredJobs} />
+        </div>
       </div>
-
-      <Grid data={filteredJobs} />
     </div>
   );
 }
