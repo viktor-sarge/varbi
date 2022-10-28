@@ -11,9 +11,15 @@ const Card = (props) => {
 				<Pin className="mr-2" />
 				{props.data.town}
 			</div>
-			<div className="flex justify-end mt-8">
-				<Label content={props.data.type} background="bg-green-200" />
-				<Label content={props.data.hours} background="bg-green-200" />
+			<div className="flex flex-col items-end xl:flex-row justify-end mt-8">
+				<Label
+					content={props.data.type}
+					classes="bg-green-200 mt-4 xl:mt-0"
+				/>
+				<Label
+					content={props.data.hours}
+					classes="bg-green-200 mt-4 xl:mt-0"
+				/>
 			</div>
 		</div>
 	);
