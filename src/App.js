@@ -44,12 +44,18 @@ function App() {
     <div className="App">
 
       <div className='container px-4 mx-auto'>
+
+        {/* Rubrik */}
         <div className='text-center'>
           <h1 className='text-3xl font-bold py-12'>Lediga jobb</h1>
         </div>
+
+        {/* Sökruta */}
         <div className='flex justify-center'>
           <SearchBox onChangeHandler={onSearchChange} placeholder='Sök på jobbtitlar här' className='search-box' />
         </div>
+
+        {/* Filter / dropdowns */}
         <div className='flex flex-col lg:flex-row pt-8 pb-12 justify-center gap-4'>
           <Dropdown values={towns} name="towns" id="towns-select" />
           <Dropdown values={types} name="types" id="types-select" />
@@ -57,8 +63,10 @@ function App() {
         </div>
       </div>
 
+      {/* Grid med korten */}
       <div className='bg-sky-900 px-4'>
-        <div className='container mx-auto py-16'>
+        <div className='container mx-auto pt-8 pb-16'>
+          <div className='text-white text-center pb-8 font-bold'>Visar {filteredJobs.length} jobb av {jobs.length}</div>
           <Grid data={filteredJobs} />
         </div>
       </div>
