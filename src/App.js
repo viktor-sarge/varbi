@@ -15,7 +15,6 @@ function App() {
 
   // Sortera upp datan om placering till dropdown
   mockData.positions.forEach(item=>{
-    console.log(item);
     if(!towns.includes(item.town)) {
       setTown([...towns, item.town ])}
     if(!types.includes(item.type)) {
