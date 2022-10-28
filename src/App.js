@@ -10,6 +10,9 @@ function App() {
   const [towns, setTown] = useState([]);
   const [types, setType] = useState([]);
   const [hours, setHours] = useState([]);
+  const [activeTown, setActiveTown] = useState('');
+  const [activeType, setActiveType] = useState('');
+  const [activeHours, setActiveHours] = useState('');
   const [searchField, setSearchField] = useState('');
   const [filteredJobs, setFilterJobs] = useState(mockData.positions);
 
@@ -17,8 +20,10 @@ function App() {
   mockData.positions.forEach(item=>{
     if(!towns.includes(item.town)) {
       setTown([...towns, item.town ])}
+
     if(!types.includes(item.type)) {
       setType([...types, item.type ])}
+
     if(!hours.includes(item.hours)) {
       setHours([...hours, item.hours ])}
   })
@@ -30,14 +35,29 @@ function App() {
 
   useEffect(()=>{
     const newFilteredJobs = jobs.filter(
-      job => job.title.toLocaleLowerCase().includes(searchField)
+      job => (job.title.toLocaleLowerCase().includes(searchField) && job.town == activeTown && job.hours == activeHours && activeType == activeType)
     );
     setFilterJobs(newFilteredJobs);
-  }, [jobs, searchField]);
+  }, [jobs, searchField, activeTown, activeHours, activeType]);
 
   const onSearchChange = (event) => {
     const searchFieldString = event.target.value.toLocaleLowerCase();
     setSearchField(searchFieldString);
+  };
+
+  const onTownChange = (event) => {
+    const selectedTownString = event.target.value;
+    setActiveTown(selectedTownString);
+  };
+
+  const onTypesChange = (event) => {
+    const selectedTypeString = event.target.value;
+    setActiveType(selectedTypeString);
+  };
+
+  const onHoursChange = (event) => {
+    const selectedHoursString = event.target.value;
+    setActiveHours(selectedHoursString);
   };
 
   return (
@@ -57,9 +77,9 @@ function App() {
 
         {/* Filter / dropdowns */}
         <div className='flex flex-col lg:flex-row pt-8 pb-12 justify-center gap-4'>
-          <Dropdown values={towns} name="towns" id="towns-select" />
-          <Dropdown values={types} name="types" id="types-select" />
-          <Dropdown values={hours} name="hours" id="hours-select" />
+          <Dropdown values={towns} onChangeHandler={onTownChange} name="towns" id="towns-select" />
+          <Dropdown values={types} onChangeHandler={onTypesChange} name="types" id="types-select" />
+          <Dropdown values={hours} onChangeHandler={onHoursChange} name="hours" id="hours-select" />
         </div>
       </div>
 
