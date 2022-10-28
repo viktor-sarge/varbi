@@ -50,7 +50,7 @@ function App() {
         <div className='flex justify-center'>
           <SearchBox onChangeHandler={onSearchChange} placeholder='Sök på jobbtitlar här' className='search-box' />
         </div>
-        <div className='flex pt-8 pb-12 justify-center'>
+        <div className='flex flex-col md:flex-row pt-8 pb-12 justify-center'>
           <Dropdown values={towns} name="towns" id="towns-select" />
           <Dropdown values={types} name="types" id="types-select" />
           <Dropdown values={hours} name="hours" id="hours-select" />
