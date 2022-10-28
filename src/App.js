@@ -35,7 +35,7 @@ function App() {
 
   useEffect(()=>{
     const newFilteredJobs = jobs.filter(
-      job => (job.title.toLocaleLowerCase().includes(searchField) && job.town == activeTown && job.hours == activeHours && activeType == activeType)
+      job => (job.title.toLocaleLowerCase().includes(searchField) && job.town === activeTown && job.hours === activeHours && activeType === activeType)
     );
     setFilterJobs(newFilteredJobs);
   }, [jobs, searchField, activeTown, activeHours, activeType]);
