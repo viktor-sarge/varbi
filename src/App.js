@@ -2,6 +2,7 @@
 import Grid from './components/grid/grid.component';
 import { useState, useEffect } from 'react';
 import mockData from './mockData.json';
+import municipalities from './municipalityCodes.json';
 import SearchBox from './components/search-box/search-box.component';
 import Dropdown from './components/drodown/dropdown.component';
 
@@ -18,8 +19,8 @@ function App() {
 
   // Sortera upp datan om placering till dropdown
   mockData.positions.forEach(item=>{
-    if(!towns.includes(item.town)) {
-      setTown([...towns, item.town ])}
+    if(!towns.includes(item.codes.municipality)) {
+      setTown([...towns, item.codes.municipality ])}
 
     if(!types.includes(item.type)) {
       setType([...types, item.type ])}
@@ -32,11 +33,10 @@ function App() {
   types.sort();
   hours.sort();
 
-
   useEffect(()=>{
     const newFilteredJobs = jobs.filter(
       job => (job.title.toLocaleLowerCase().includes(searchField) 
-        && job.town === activeTown 
+        && String(job.codes.municipality) === activeTown 
         && job.hours === activeHours 
         && job.type === activeType
         )
@@ -64,6 +64,23 @@ function App() {
     setActiveHours(selectedHoursString);
   };
 
+  // Preppa value och klartextnamn för typ-dropdown
+  const dropdownTownsData = towns.map((entry)=>{
+    return {value: entry, name: municipalities[entry]}
+  });
+
+  // Preppa value och klartextnamn för typ-dropdown
+  const dropdownTypesData = types.map((entry)=>{
+    return {value: entry, name: entry}
+  });
+
+    // Preppa value och klartextnamn för hours-dropdown
+    const dropdownHoursData = hours.map((entry)=>{
+      return {value: entry, name: entry}
+    });
+  
+
+
   return (
     <div className="App">
 
@@ -81,9 +98,9 @@ function App() {
 
         {/* Filter / dropdowns */}
         <div className='flex flex-col lg:flex-row pt-8 pb-12 justify-center gap-4'>
-          <Dropdown values={towns} onChangeHandler={onTownChange} name="towns" id="towns-select" />
-          <Dropdown values={types} onChangeHandler={onTypesChange} name="types" id="types-select" />
-          <Dropdown values={hours} onChangeHandler={onHoursChange} name="hours" id="hours-select" />
+          <Dropdown values={dropdownTownsData} onChangeHandler={onTownChange} name="towns" id="towns-select" />
+          <Dropdown values={dropdownTypesData} onChangeHandler={onTypesChange} name="types" id="types-select" />
+          <Dropdown values={dropdownHoursData} onChangeHandler={onHoursChange} name="hours" id="hours-select" />
         </div>
       </div>
 
