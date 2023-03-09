@@ -4,7 +4,6 @@ import { useState, useEffect } from 'react';
 import mockData from './mockData.json';
 import municipalities from './municipalityCodes.json';
 import SearchBox from './components/search-box/search-box.component';
-import Dropdown from './components/drodown/dropdown.component';
 import CheckboxGroup from './components/checkboxGroup/checkbox.component';
 
 function App() {
@@ -39,9 +38,9 @@ function App() {
     const newFilteredJobs = jobs.filter(
       job => (
         job.title.toLocaleLowerCase().includes(searchField) 
-        && (activeTowns.length == 0 || activeTowns.includes(String(job.codes.municipality)) )
-        && (activeHours.length == 0 || activeHours.includes(String(job.hours)) )
-        && (activeTypes.length == 0 || activeTypes.includes(String(job.type)) )
+        && (activeTowns.length === 0 || activeTowns.includes(String(job.codes.municipality)) )
+        && (activeHours.length === 0 || activeHours.includes(String(job.hours)) )
+        && (activeTypes.length === 0 || activeTypes.includes(String(job.type)) )
         )
     );
     setFilterJobs(newFilteredJobs);
