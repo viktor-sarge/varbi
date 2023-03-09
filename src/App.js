@@ -5,15 +5,16 @@ import mockData from './mockData.json';
 import municipalities from './municipalityCodes.json';
 import SearchBox from './components/search-box/search-box.component';
 import Dropdown from './components/drodown/dropdown.component';
+import CheckboxGroup from './components/checkboxGroup/checkbox.component';
 
 function App() {
 
   const [towns, setTown] = useState([]);
   const [types, setType] = useState([]);
   const [hours, setHours] = useState([]);
-  const [activeTown, setActiveTown] = useState('');
-  const [activeType, setActiveType] = useState('');
-  const [activeHours, setActiveHours] = useState('');
+  const [activeTowns, setActiveTowns] = useState([]);
+  const [activeTypes, setActiveTypes] = useState([]);
+  const [activeHours, setActiveHours] = useState([]);
   const [searchField, setSearchField] = useState('');
   const [filteredJobs, setFilterJobs] = useState(mockData.positions);
 
@@ -34,34 +35,58 @@ function App() {
   hours.sort();
 
   useEffect(()=>{
+    //debugger
     const newFilteredJobs = jobs.filter(
-      job => (job.title.toLocaleLowerCase().includes(searchField) 
-        && String(job.codes.municipality) === activeTown 
-        && job.hours === activeHours 
-        && job.type === activeType
+      job => (
+        job.title.toLocaleLowerCase().includes(searchField) 
+        && (activeTowns.length == 0 || activeTowns.includes(String(job.codes.municipality)) )
+        && (activeHours.length == 0 || activeHours.includes(String(job.hours)) )
+        && (activeTypes.length == 0 || activeTypes.includes(String(job.type)) )
         )
     );
     setFilterJobs(newFilteredJobs);
-  }, [jobs, searchField, activeTown, activeHours, activeType]);
+  }, [jobs, searchField, activeTowns, activeHours, activeTypes]);
 
   const onSearchChange = (event) => {
     const searchFieldString = event.target.value.toLocaleLowerCase();
     setSearchField(searchFieldString);
   };
 
-  const onTownChange = (event) => {
-    const selectedTownString = event.target.value;
-    setActiveTown(selectedTownString);
+  const onTownsChange = (event) => {
+    console.log(event)
+    const newTowns = activeTowns;
+    const value = event.target.value;
+    const index = newTowns.indexOf(value);
+    if(index > -1) {
+      newTowns.splice(index,1);
+    } else {
+      newTowns.push(event.target.name);
+    }
+    setActiveTowns([...newTowns]);
   };
 
   const onTypesChange = (event) => {
-    const selectedTypeString = event.target.value;
-    setActiveType(selectedTypeString);
+    const newTypes = activeTypes;
+    const value = event.target.name;
+    const index = newTypes.indexOf(value);
+    if(index > -1) {
+      newTypes.splice(index,1);
+    } else {
+      newTypes.push(event.target.name);
+    }
+    setActiveTypes([...newTypes]);
   };
 
   const onHoursChange = (event) => {
-    const selectedHoursString = event.target.value;
-    setActiveHours(selectedHoursString);
+    const newHours = activeHours;
+    const value = event.target.name;
+    const index = newHours.indexOf(value);
+    if(index > -1) {
+      newHours.splice(index,1);
+    } else {
+      newHours.push(event.target.name);
+    }
+    setActiveHours([...newHours]);
   };
 
   // Preppa value och klartextnamn för typ-dropdown
@@ -98,9 +123,9 @@ function App() {
 
         {/* Filter / dropdowns */}
         <div className='flex flex-col lg:flex-row pt-8 pb-12 justify-center gap-4'>
-          <Dropdown values={dropdownTownsData} onChangeHandler={onTownChange} name="towns" id="towns-select" />
-          <Dropdown values={dropdownTypesData} onChangeHandler={onTypesChange} name="types" id="types-select" />
-          <Dropdown values={dropdownHoursData} onChangeHandler={onHoursChange} name="hours" id="hours-select" />
+          <CheckboxGroup values={dropdownTownsData} onChangeHandler={onTownsChange} name="towns" id="towns-select" />
+          <CheckboxGroup values={dropdownHoursData} onChangeHandler={onHoursChange} name="hours" id="hours-select" />
+          <CheckboxGroup values={dropdownTypesData} onChangeHandler={onTypesChange} name="types" id="types-select" />
         </div>
       </div>
 
